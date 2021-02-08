@@ -137,7 +137,7 @@ function solveMaze(maze, point, currentSolution = ''){
     
 }
 
-function findAnagrams(word, prefix = ''){
+function findAnagrams(word){
   if(word.length === 1){
     return word;
   }
@@ -146,10 +146,12 @@ function findAnagrams(word, prefix = ''){
   }
   let anagrams = [];
   for(let i = 0; i < word.length; i++){
-    anagrams.push(findAnagrams(word.substring(0,i) + word.substring(i+1)).map(anagram => {
-      anagram.split(',');
-      word.charAt(i) + anagram;
-    }));
+    let smallAnagrams = [];
+    smallAnagrams = smallAnagrams.concat(findAnagrams(word.substring(0,i) + word.substring(i+1)));
+    smallAnagrams = smallAnagrams.map(anagram => {
+      return word.charAt(i) + anagram;
+    });
+    anagrams = smallAnagrams.concat(anagrams);
   }
 
   return anagrams;
